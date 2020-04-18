@@ -20,6 +20,7 @@ struct link{
     link* next_link;
 };
 
+// The linked list class
 class linked_list{
     public:
         // The list has a length
