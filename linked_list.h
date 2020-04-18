@@ -41,8 +41,8 @@ class linked_list{
         int pop();
 
         // Insert & Remove functions
-        //void insert(int index, int value);
-        //void remove(int index);
+        void insert(int index, int value);
+        void remove(int index);
 
         // Index function
         int operator[](int index);

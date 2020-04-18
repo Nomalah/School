@@ -79,6 +79,51 @@ int linked_list::pop(){
     return temp;
 }
 
+// Linked list insert function
+// Inserts a link at a specified index in the list
+void linked_list::insert(int index, int value){
+    // If the index is greater then the length or the index is smaller then 0, the index is out of bounds
+    if (index + 1 > length || index < 0) return;
+
+    // Start the iteration at the first link
+    link* current_link = first_link;
+
+    // Iterate through the list through to the index
+    for(int i = 0; i < index; i++) current_link = current_link->next_link;
+
+    // Store the link before and after the current link
+    link* temp_next_link = current_link->next_link;
+    
+    // Create the new link
+    current_link->next_link = new link();
+    *(current_link->next_link) = {current_link, value, temp_next_link};
+}
+
+// Linked list remove function
+// Removes a link at a specified index from the list
+void linked_list::remove(int index){
+    // If the index is greater then the length or the index is smaller then 0, the index is out of bounds
+    if (index + 1 > length || index < 0) return;
+
+    // Start the iteration at the first link
+    link* current_link = first_link;
+
+    // Iterate through the list through to the index
+    for(int i = 0; i <= index; i++) current_link = current_link->next_link;
+
+    // Store the link before and after the current link
+    link* temp_previous_link = current_link->previous_link;
+    link* temp_next_link = current_link->next_link;
+    
+    // Delete the current link
+    delete current_link;
+
+    // Reconnect the now disconnected links
+    temp_previous_link->next_link = temp_next_link;
+    temp_next_link->previous_link = temp_previous_link;
+}
+
+// Linked list index function
 // Returns the value of the index specified
 int linked_list::operator[](int index){
     // If the index is greater then the length or the index is smaller then 0, the index is out of bounds
