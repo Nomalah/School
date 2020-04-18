@@ -8,6 +8,8 @@ This is the header file for my linked list library
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#include <initializer_list>
+
 // The linked list is built up of links (24 byte size, 1/3 the storage efficency of a normal array)
 struct link{
     // Stores the previous link in the chain
@@ -34,6 +36,7 @@ class linked_list{
 
         // List constructor & destructor
         linked_list();
+        linked_list(std::initializer_list<int> list_initializer);
         ~linked_list();
 
         // Push & Pop functions

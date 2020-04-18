@@ -5,6 +5,7 @@ Copyright April 17 2020
 This is the implementation of the outline in linked_list.h
 */
 
+#include <initializer_list>
 #include "linked_list.h"
 
 // Linked list constructor
@@ -18,6 +19,22 @@ linked_list::linked_list(){
 
     // At the start of list, the first link is the same last
     last_link = first_link;
+}
+
+// Linked list initializer_list constructor
+linked_list::linked_list(std::initializer_list<int> list_initializer){
+    // When a list starts it has no length
+    length = 0;
+
+    // The first link is like a placeholder, has none before, none after, and no value
+    first_link = new link();
+    *first_link = {nullptr, 0, nullptr};
+
+    // At the start of list, the first link is the same last
+    last_link = first_link;
+
+    for(int i : list_initializer)
+        push(i);
 }
 
 // Linked list destructor
