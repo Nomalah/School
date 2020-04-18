@@ -27,18 +27,22 @@ class linked_list{
         int length;
 
         // Starting link
-        link first_link;
+        link* first_link;
 
         // End link
         link* last_link;
 
-        // List constructor
+        // List constructor & destructor
         linked_list();
-        //~linked_list();
+        ~linked_list();
 
-        // Push & pop functions
+        // Push & Pop functions
         void push(int value);
         int pop();
+
+        // Insert & Remove functions
+        //void insert(int index, int value);
+        //void remove(int index);
 
         // Index function
         int operator[](int index);

@@ -13,10 +13,28 @@ linked_list::linked_list(){
     length = 0;
 
     // The first link is like a placeholder, has none before, none after, and no value
-    first_link = {nullptr, 0, nullptr};
+    first_link = new link();
+    *first_link = {nullptr, 0, nullptr};
 
     // At the start of list, the first link is the same last
-    last_link = &first_link;
+    last_link = first_link;
+}
+
+// Linked list destructor
+linked_list::~linked_list(){
+    // Start at the second last link
+    link* current_link = last_link->previous_link;
+
+    // Loop through the chain from back to front
+    for(int i = 0; i < length; i++){
+        // Delete the link ahead of the current link
+        delete current_link->next_link;
+
+        // Set the current link to the previous link
+        current_link = current_link->previous_link;
+    }
+    // Delete the first link in the chain
+    delete first_link;
 }
 
 // Linked list push function
@@ -67,7 +85,7 @@ int linked_list::operator[](int index){
     if (index + 1 > length || index < 0) return 0;
 
     // Start the iteration at the first link
-    link* current_link = &first_link;
+    link* current_link = first_link;
 
     // Iterate through the list through to the index
     for(int i = 0; i <= index; i++) current_link = current_link->next_link;
