@@ -11,14 +11,24 @@ This is the example file for my linked list library
 using namespace std;
 
 int main(){
-    linked_list test;
-    for (int i = 0; i < 1000000; i++){
+    linked_list test {10, 20, 50, 2, 3};
+    cout << test[2] << endl;
+    cout << test.pop() << endl;
+
+    for (int i = 0; i < 5; i++)
         test.push(i);
-    }
-    //test.push(15);
+    
+    test.push(15);
+    
     cout << test.pop() << endl;
+    cout << test[0] << endl;
     cout << test.pop() << endl;
-    cout << test.pop() << endl;
-    cout << test[500] << endl;
+
+    test.insert(5, 20);
+    cout << test[5] << endl;
+    test.remove(5);
+    cout << test[5] << endl;
+
+
     return 0;
 }
