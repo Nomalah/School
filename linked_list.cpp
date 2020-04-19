@@ -6,6 +6,7 @@ This is the implementation of the outline in linked_list.h
 */
 
 #include <initializer_list>
+#include <stdexcept>
 #include "linked_list.h"
 
 // Linked list constructor
@@ -100,7 +101,7 @@ int linked_list::pop(){
 // Inserts a link at a specified index in the list
 void linked_list::insert(int index, int value){
     // If the index is greater then the length or the index is smaller then 0, the index is out of bounds
-    if (index + 1 > length || index < 0) return;
+    if (index + 1 > length || index < 0) throw std::out_of_range ("operator[]");
 
     // Start the iteration at the first link
     link* current_link = first_link;
@@ -120,7 +121,7 @@ void linked_list::insert(int index, int value){
 // Removes a link at a specified index from the list
 void linked_list::remove(int index){
     // If the index is greater then the length or the index is smaller then 0, the index is out of bounds
-    if (index + 1 > length || index < 0) return;
+    if (index + 1 > length || index < 0) throw std::out_of_range ("operator[]");
 
     // Start the iteration at the first link
     link* current_link = first_link;
@@ -142,9 +143,9 @@ void linked_list::remove(int index){
 
 // Linked list index function
 // Returns the value of the index specified
-int linked_list::operator[](int index){
+int& linked_list::operator[](int index){
     // If the index is greater then the length or the index is smaller then 0, the index is out of bounds
-    if (index + 1 > length || index < 0) return 0;
+    if (index + 1 > length || index < 0) throw std::out_of_range ("operator[]");
 
     // Start the iteration at the first link
     link* current_link = first_link;

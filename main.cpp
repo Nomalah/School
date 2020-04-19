@@ -28,6 +28,8 @@ int main(){
     cout << test[5] << endl;
     test.remove(5);
     cout << test[5] << endl;
+    test[5] = 2;
+    cout << test[5] << endl;
 
 
     return 0;

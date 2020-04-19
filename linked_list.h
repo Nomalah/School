@@ -48,7 +48,7 @@ class linked_list{
         void remove(int index);
 
         // Index function
-        int operator[](int index);
+        int& operator[](int index);
 };
 
 #endif // LINKED_LIST_H
