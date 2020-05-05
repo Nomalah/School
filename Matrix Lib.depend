@@ -1,0 +1,46 @@
+# depslib dependency file v1.0
+1578666485 source:h:\profile\desktop\matrix lib\main.cpp
+	<iostream>
+	<math.h>
+	"matrix.h"
+
+1578666153 h:\profile\desktop\matrix lib\include\matrix.h
+	<functional>
+
+1578666512 source:h:\profile\desktop\matrix lib\src\matrix.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<functional>
+	"matrix.h"
+
+1579147484 source:d:\coding\matrix lib\main.cpp
+	<iostream>
+	<math.h>
+	<string>
+	<thread>
+	"neuralNetwork.h"
+	"matrix.h"
+
+1579138320 d:\coding\matrix lib\include\matrix.h
+	<functional>
+
+1579138320 source:d:\coding\matrix lib\src\matrix.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<functional>
+	<thread>
+	"matrix.h"
+
+1579145088 d:\coding\matrix lib\include\neuralnetwork.h
+	<mutex>
+	"matrix.h"
+
+1579147684 source:d:\coding\matrix lib\src\neuralnetwork.cpp
+	<iostream>
+	<math.h>
+	<mutex>
+	"matrix.h"
+	"neuralNetwork.h"
+
