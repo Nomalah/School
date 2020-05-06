@@ -1,7 +1,8 @@
 #include <iostream>
 #include <math.h>
+#include <time.h>
+#include <cstdlib>
 #include <string>
-#include <thread>
 #include "neuralNetwork.h"
 #include "matrix.h"
 
@@ -12,7 +13,7 @@ int main()
 {
     int numOfLayers = 3;
     int layerSizes[3] = {2,4,1};
-    neuralNetwork evaluation(numOfLayers,layerSizes);
+    neuralNetwork evaluation(numOfLayers, layerSizes);
     float test[2] = {1,0};
     //cout << "here";
     matrix out (evaluation.think(test), 1, "out");
@@ -25,26 +26,20 @@ int main()
     float** trainingTarget = new float* [4];
     for (int i = 0; i < 4; i++){
         trainingData[i] = new float [2];
-        listData[i][0] = listData[i][0]; listData[i][1] = listData[i][1];
-        trainingTarget[i] = new float [1];
+        trainingData[i][0] = listData[i][0]; 
+        trainingData[i][1] = listData[i][1];
+        trainingTarget[i] = new float[1];
         listTarget[i][0] = listTarget[i][0];
     }
-    //= {{0,0},{1,0},{0,1},{1,1}};
-//= {{0},{1},{1},{0}};
-    int numOfThreads = 1;
-    thread trainingThreads[numOfThreads];
-
-    for (int i = 0; i < numOfThreads; i++)
-    {
-        trainingThreads[i] = thread(&neuralNetwork::trainMultiple, &evaluation, trainingData, trainingTarget, 4, 100000);
-        cout << i << "\r";
+    srand(time(0));
+    for(int i = 0; i < 100000; i++){
+        int r = rand() % 4;
+        evaluation.train(trainingData[r], listTarget[r]);
     }
-    for (int i = 0; i < numOfThreads; i++)
-    {
-        (trainingThreads[i]).join();
+    for(int i = 0; i < 4; i++){
+        out.fromArray(evaluation.think(listData[i]), 1);
+        out.print();
     }
-    out.fromArray(evaluation.think(test), 1);
-    out.print();
 	out.destroyMatrix();
     return 0;
 }
