@@ -26,7 +26,9 @@ neuralNetwork::~neuralNetwork()
 {
     cout << "Neural network destuctor" << endl;
     for (int i = 0; i < numOfLayers - 1; i++){   
+        weights[i]->destroyMatrix();
         delete weights[i];
+        bias[i]->destroyMatrix();
         delete bias[i];
     }
     delete[] weights;
@@ -84,18 +86,17 @@ void neuralNetwork::train(float* trainIn, float* trainTarget)
     matrix targets(trainTarget, sizeOfLayers[numOfLayers-1], "targets");
     matrix** layerErrors = new matrix*[numOfLayers-1];
 
-    for (int i = 0; i < numOfLayers - 1; i++)
-    {
+    for (int i = 0; i < numOfLayers - 1; i++){
         layerErrors[i] = new matrix(0,0, "layerErrors");
     }
 
-    matrix deSigmoidOut((*layerOutputs[numOfLayers-1]).rows,(*layerOutputs[numOfLayers-1]).cols, "desigmoid");
+    matrix deSigmoidOut(layerOutputs[numOfLayers-1]->rows, layerOutputs[numOfLayers-1]->cols, "desigmoid");
     deSigmoidOut.mapFunc([=](float v, int x, int y) -> float
     {
-        return log((*layerOutputs[numOfLayers-1]).data[y][x]/(1-(*layerOutputs[numOfLayers-1]).data[y][x]));
+        return log(layerOutputs[numOfLayers-1]->data[y][x]/(1-layerOutputs[numOfLayers-1]->data[y][x]));
     });
 
-    (*layerErrors[numOfLayers-2]).setTo(targets - deSigmoidOut);
+    layerErrors[numOfLayers-2]->setTo(targets - deSigmoidOut);
     targets.destroyMatrix();
     deSigmoidOut.destroyMatrix();
 
@@ -111,12 +112,12 @@ void neuralNetwork::train(float* trainIn, float* trainTarget)
 
         gradient.mapFunc([](float v, int x, int y) -> float{return v * 0.1;});
 
-        matrix layerOutputT = (*layerOutputs[i-1]).transpose();
+        matrix layerOutputT = layerOutputs[i-1]->transpose();
         matrix weightsDeltas = gradient.dot(layerOutputT);
         layerOutputT.destroyMatrix();
 
-        (*weights[i-1]).setTo(*weights[i-1] + weightsDeltas);
-        (*bias[i-1]).setTo(*bias[i-1] + gradient);
+        weights[i-1]->setTo(*weights[i-1] + weightsDeltas);
+        bias[i-1]->setTo(*bias[i-1] + gradient);
         weightsDeltas.destroyMatrix();
         gradient.destroyMatrix();
         if(i==1)

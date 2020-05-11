@@ -32,7 +32,7 @@ class matrix{
 
         // Copy constructor
         matrix copy();
-        
+        matrix(const matrix& copy_src);
 
         // Move constructor
         //matrix(matrix&& move_src);
@@ -42,7 +42,7 @@ class matrix{
 
         // Move assignment
 		void setTo(matrix obj);
-        //matrix& operator=(matrix&& move_rhs);
+        matrix& operator=(matrix&& move_rhs);
         
         // Add two matrices
         matrix operator+ (matrix& obj);

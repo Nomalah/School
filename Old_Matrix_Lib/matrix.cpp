@@ -46,7 +46,10 @@ void matrix::destroyMatrix(){
 }
 
 matrix::~matrix(){
-
+    /*for (int y = 0; y < rows; y++){
+        delete [] data[y];
+    }
+    delete [] data;*/
 }
 
 
@@ -81,27 +84,30 @@ matrix matrix::copy()
     return m;
 }
 
-//matrix::matrix(const matrix& copy_src) : rows(copy_src.rows), cols(copy_src.cols){}
+matrix::matrix(const matrix& copy_src) : rows(copy_src.rows), cols(copy_src.cols), name(copy_src.name){
+    data = new float* [rows];
+    for (int y = 0; y < rows; y++){
+        data[y] = new float [cols];
+        for (int x = 0; x < cols; x++){
+            data[y][x] = copy_src.data[y][x];
+        }
+    }
+}
 
-void matrix::setTo(matrix obj)
-{
-    if(this != &obj)
-    {
+void matrix::setTo(matrix obj){
+    if(this != &obj){
         this -> destroyMatrix();
 
         rows = obj.rows;
         cols = obj.cols;
 
         data = new float* [rows];
-        for (int y = 0; y < rows; y++)
-        {
+        for (int y = 0; y < rows; y++){
             data[y] = new float [cols];
-            for (int x = 0; x < cols; x++)
-            {
+            for (int x = 0; x < cols; x++){
                 data[y][x] = obj.data[y][x];
             }
         }
-
     }
     obj.destroyMatrix();
 }
@@ -129,7 +135,7 @@ matrix& matrix::operator=(const matrix& copy_rhs){
     return *this;
 }
 
-/*matrix& matrix::operator=(matrix&& move_rhs){
+matrix& matrix::operator=(matrix&& move_rhs){
     if(this != &move_rhs){
         for(int y = 0; y < rows; y++){
             delete[] this->data[y];
@@ -150,7 +156,7 @@ matrix& matrix::operator=(const matrix& copy_rhs){
         move_rhs.data = nullptr;
     }
     return *this;
-}*/
+}
 
 
 matrix matrix::transpose(){
@@ -217,7 +223,8 @@ matrix matrix::dot(matrix &obj)
         {
             sum += data[y][k] * obj.data[k][x];
         }
-        return sum;});
+        return sum;
+    });
 
     return result;
 }
