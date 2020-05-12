@@ -1,7 +1,8 @@
 #include <functional>
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <cstring> // memcpy
 
 #include "matrix.h"
 
@@ -21,8 +22,9 @@ matrix::matrix(unsigned initial_columns, unsigned initial_rows)
 matrix::matrix(const matrix& copy_src)
     : num_of_columns(copy_src.num_of_columns), num_of_rows(copy_src.num_of_rows), size(copy_src.size){
     data = new double[size];
-    for(unsigned long long index = 0; index < size; index++)
-        data[index] = copy_src.data[index];
+    memcpy(data, copy_src.data, size*sizeof(double));
+    /*for(unsigned long long index = 0; index < size; index++)
+        data[index] = copy_src.data[index];*/
 }
 
 // Move constructor
@@ -41,8 +43,7 @@ matrix& matrix::operator=(const matrix& copy_rhs){
         data = copy_rhs.data;
 
         data = new double[size];
-        for(unsigned long long index = 0; index < size; index++)
-            data[index] = copy_rhs.data[index];
+        memcpy(data, copy_rhs.data, size*sizeof(double));
     }
     return *this;
 }

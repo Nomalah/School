@@ -1,7 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include <initializer_list>
+//#include <initializer_list>
 #include <stdlib.h>
 
 #include "matrix.h"
