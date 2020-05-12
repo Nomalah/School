@@ -11,8 +11,24 @@ using namespace std;
 
 
 int main(){
-    
     srand(time(NULL));
+    //cout << sizeof(matrix) << endl;
+    /*
+    matrix my_matrix(3, 2);
+    {
+        int i = 0;
+        my_matrix.map_function([&i](double) -> double{
+            return i++;
+        });
+    }
+    matrix my_matrix2(3, 2);
+    {
+        int i = 0;
+        my_matrix.map_function([&i](double) -> double{
+            return i++;
+        });
+    }
+    my_matrix.print();*/
     
     neural_network my_net({2, 4, 1});
 
@@ -25,7 +41,7 @@ int main(){
     vector<vector<double>> training_inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
     vector<vector<double>> training_outputs = {{0}, {1}, {1}, {0}};
     //mem fault in training
-    for(int i = 0; i < 10000000; i++){
+    for(int i = 0; i < 1000000; i++){
         int x = rand() % 4;
         my_net.train(training_inputs[x], training_outputs[x]);
     }
