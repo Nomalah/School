@@ -9,9 +9,9 @@
                 "-std=c++17",
                 "-stdlib=libc++",
                 "-g",
-                "${workspaceFolder}/*.cpp",
+                "${workspaceFolder}/New_Matrix_Lib/*.cpp",
                 "-o",
-                "${workspaceFolder}/out"
+                "${workspaceFolder}/new_out"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
