@@ -1,2 +1,3 @@
 # NMLH
-My Version of some standard library functions and classes
+Custom Functions & Classes under the nmlh namespace, includes but not limited to:
+Image manipulation
