@@ -1,2 +1,2 @@
 # NMLH
-Custom Image Manipulation Library
+An OpenGL Base Library
