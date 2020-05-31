@@ -30,5 +30,6 @@ An OpenGL Base Library
 
 #### Long Term:
 - Textures
+- Integrated Layering
 - Batch Renderer
 
