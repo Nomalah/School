@@ -3,7 +3,7 @@
 #include <string>
 
 
-#include "../nmlh_log.hpp"
+#include "../../nmlh_log.hpp"
 #include "nmlh_shader.h"
 
 namespace nmlh::gl::util{
