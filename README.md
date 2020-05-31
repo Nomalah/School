@@ -15,20 +15,20 @@ An OpenGL Base Library
 - OpenGL
 - GLM
 
-#### Finished:
+### Finished:
 
 - Shader Compilation & Creation
 
-#### TODO:
+### TODO:
 
-##### Short Term:
+#### Short Term:
 - Templated Uniform Shader Function
 - Vertex Array Abstraction
 - Vertex Buffer Abstraction
 - Vertex Buffer Layout
 - Index Buffer Abstraction
 
-##### Long Term:
+#### Long Term:
 - Textures
 - Batch Renderer
 
