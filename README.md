@@ -2,7 +2,7 @@
 
 An OpenGL Base Library
 
-#### This library includes:
+### This library will/includes:
 
 - Custom Renderer
 - Dynamic Drawing
@@ -14,3 +14,21 @@ An OpenGL Base Library
 - GLFW
 - OpenGL
 - GLM
+
+#### Finished:
+
+- Shader Compilation & Creation
+
+#### TODO:
+
+##### Short Term:
+- Templated Uniform Shader Function
+- Vertex Array Abstraction
+- Vertex Buffer Abstraction
+- Vertex Buffer Layout
+- Index Buffer Abstraction
+
+##### Long Term:
+- Textures
+- Batch Renderer
+
