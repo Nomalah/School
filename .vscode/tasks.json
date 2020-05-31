@@ -8,7 +8,7 @@
             "args": [
                 "-std=c++2a",
                 "-stdlib=libc++",
-                "-O2",
+                "-O0",
                 "-l",
                 "glfw",
                 "-framework",
@@ -20,9 +20,11 @@
                 "-framework",
                 "CoreVideo",
                 "${workspaceFolder}/*.cpp",
+                "${workspaceFolder}/nmlh/gl/core/*.cpp",
+                "${workspaceFolder}/nmlh/gl/util/*.cpp",
                 "${workspaceFolder}/vendor/stb/*.cpp",
                 "-o",
-                "${workspaceFolder}/app"
+                "${workspaceFolder}/example"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
