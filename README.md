@@ -18,7 +18,6 @@ An OpenGL Base Library
 ### Finished:
 
 - Shader Compilation & Creation
-
 - Vertex Array Abstraction
 - Vertex Buffer Abstraction
 - Vertex Buffer Layout
