@@ -21,5 +21,6 @@
 #include <glm/glm.hpp>
 
 #include "gl/core/nmlh_vertex_buffer.h"
+#include "gl/core/nmlh_vertex_array.h"
 #include "gl/util/nmlh_shader.h"
 #include "nmlh_log.hpp"
