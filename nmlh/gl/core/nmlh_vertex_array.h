@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../../nmlh_log.hpp"
+#include "../../__nmlh_gen_include.h"
 #include "nmlh_vertex_buffer.h"
-#include <OpenGL/gl3.h>
 
 namespace nmlh::gl::core{
     class vertexArray{

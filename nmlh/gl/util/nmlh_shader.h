@@ -1,7 +1,6 @@
 #pragma once
 
-#include <OpenGL/gl3.h>
-#include <glm/glm.hpp>
+#include "../../__nmlh_gen_include.h"
 #include <string>
 #include <unordered_map>
 

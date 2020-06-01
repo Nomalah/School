@@ -1,8 +1,7 @@
 #pragma once
 
-#include <OpenGL/gl3.h>
+#include "../../__nmlh_gen_include.h"
 #include <vector>
-#include "../../nmlh_log.hpp"
 
 namespace nmlh::gl::core{
     class vertexBuffer{

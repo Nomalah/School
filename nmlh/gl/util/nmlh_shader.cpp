@@ -2,8 +2,7 @@
 #include <sstream>
 #include <string>
 
-
-#include "../../nmlh_log.hpp"
+#include "../../__nmlh_gen_include.h"
 #include "nmlh_shader.h"
 
 namespace nmlh::gl::util{
