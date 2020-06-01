@@ -19,14 +19,16 @@ An OpenGL Base Library
 
 - Shader Compilation & Creation
 
+- Vertex Array Abstraction
+- Vertex Buffer Abstraction
+- Vertex Buffer Layout
+
 ### TODO:
 
 #### Short Term:
 - Templated Uniform Shader Function
-- Vertex Array Abstraction
-- Vertex Buffer Abstraction
-- Vertex Buffer Layout
 - Index Buffer Abstraction
+- Basic Renderer Singleton/Static class
 
 #### Long Term:
 - Textures
