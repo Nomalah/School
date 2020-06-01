@@ -35,7 +35,7 @@ namespace nmlh::gl::core{
             LOG_ERR("[Invalid Push] push count ", count, 3);
         }else{
             m_Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
-            m_Stride += count * sizeof(GLuint);
+            m_Stride += count * sizeof(GLubyte);
         }
     }
 }
