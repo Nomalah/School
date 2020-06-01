@@ -7,10 +7,16 @@
 #include "nmlh_shader.h"
 
 namespace nmlh::gl::util{
-    const unsigned shaderTypes = 3;
+    const unsigned shaderTypes = 2;
 
-    shader::shader(const std::string& shaderSource) : m_RendererId(glCreateProgram()){
+    shader::shader(const std::string& shaderSource) : m_RendererId(glCreateProgram()){        
         std::ifstream shaderFile(shaderSource);
+
+        if(!shaderFile.is_open()){
+            LOG_ERR("[Couldn't Open File] ", shaderSource, 3);
+            m_RendererId = 0;
+            return;
+        }
 
         std::stringstream shaders[shaderTypes];
 
@@ -18,13 +24,13 @@ namespace nmlh::gl::util{
             NONE = -1,
             VERTEX = 0,
             FRAGMENT = 1,
-            GEOMETRY = 2,
+            GEOMETRY = 2
         };
         
         shaderType curShader = shaderType::NONE;
 
         std::string line = "";
-        while(getline(std::cin, line)){
+        while(getline(shaderFile, line)){
             if(line.find("#shader ") != std::string::npos){
                 if(line.find("vertex", 8) != std::string::npos)
                     curShader = shaderType::VERTEX;
@@ -33,8 +39,9 @@ namespace nmlh::gl::util{
                 else if(line.find("geometry", 8) != std::string::npos)
                     curShader = shaderType::GEOMETRY;
             }else{
-                if(curShader != shaderType::NONE)
-                    shaders[curShader] << line;
+                if(curShader != shaderType::NONE){
+                    shaders[curShader] << line << '\n';
+                }
             }
         }
 
@@ -62,7 +69,6 @@ namespace nmlh::gl::util{
         if(success == GL_FALSE){
             int messageLength;
             glGetProgramiv(m_RendererId, GL_INFO_LOG_LENGTH, &messageLength);
-
             char* errMessage = new char[messageLength];
             if(errMessage == nullptr){
                 LOG_ERR("[Alloc Fail] ", "char* message = new char[messageLength];", 3);
@@ -73,9 +79,10 @@ namespace nmlh::gl::util{
 
             m_RendererId = 0;
         }
-
-        for(unsigned i = 0; i < shaderTypes; i++)
+        
+        for(unsigned i = 0; i < shaderTypes; i++){
             glDeleteShader(shaderId[i]);
+        }
     }
 
     GLuint shader::compileShader(GLenum type, const std::string& source){
@@ -90,14 +97,13 @@ namespace nmlh::gl::util{
         glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
         if(success == GL_FALSE){
             int messageLength;
-            glGetShaderiv(m_RendererId, GL_INFO_LOG_LENGTH, &messageLength);
-
+            glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &messageLength);
             char* errMessage = new char[messageLength];
             if(errMessage == nullptr){
                 LOG_ERR("[Alloc Fail] ", "char* message = new char[messageLength];", 3);
             }else{
-                glGetShaderInfoLog(m_RendererId, messageLength, &messageLength, errMessage);
-                LOG_ERR("[Shader Vallidation Failed] ", errMessage, 2);
+                glGetShaderInfoLog(shaderId, messageLength, &messageLength, errMessage);
+                LOG_ERR("[Shader Compilation Failed] ", errMessage, 2);
             }
 
             return 0;
