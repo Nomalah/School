@@ -36,3 +36,8 @@ An OpenGL Base Library
 - Window Controller
 - Camera Controller
 
+## Appliction Structure:
+- Application
+    - Layer Stack
+        - Layer
+    - Window
