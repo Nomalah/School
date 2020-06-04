@@ -1,6 +1,6 @@
 # NMLH
 
-An OpenGL Base Library
+An OpenGL Game Engine
 
 ### This library will/includes:
 
