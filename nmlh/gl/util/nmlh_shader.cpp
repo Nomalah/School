@@ -3,123 +3,123 @@
 #include <string>
 
 #include "../../__nmlh_gen_include.h"
-#include "nmlh_shader.h"
+#include "nmlh_Shader.h"
 
-namespace nmlh::gl::util{
-    const unsigned shaderTypes = 2;
+namespace nmlh::util{
+    const unsigned ShaderTypes = 2;
 
-    shader::shader(const std::string& shaderSource) : m_RendererId(glCreateProgram()){        
-        std::ifstream shaderFile(shaderSource);
+    Shader::Shader(const std::string& ShaderSource) : m_RendererId(glCreateProgram()){        
+        std::ifstream ShaderFile(ShaderSource);
 
-        if(!shaderFile.is_open()){
-            LOG_ERR("[Couldn't Open File] ", shaderSource, 3);
+        if(!ShaderFile.is_open()){
+            LOG_ERR("[Couldn't Open File] ", ShaderSource, 3);
             m_RendererId = 0;
             return;
         }
 
-        std::stringstream shaders[shaderTypes];
+        std::stringstream Shaders[ShaderTypes];
 
-        enum shaderType{
+        enum ShaderType{
             NONE = -1,
             VERTEX = 0,
             FRAGMENT = 1,
             GEOMETRY = 2
         };
         
-        shaderType curShader = shaderType::NONE;
+        ShaderType CurShader = ShaderType::NONE;
 
-        std::string line = "";
-        while(getline(shaderFile, line)){
-            if(line.find("#shader ") != std::string::npos){
-                if(line.find("vertex", 8) != std::string::npos)
-                    curShader = shaderType::VERTEX;
-                else if(line.find("fragment", 8) != std::string::npos)
-                    curShader = shaderType::FRAGMENT;
-                else if(line.find("geometry", 8) != std::string::npos)
-                    curShader = shaderType::GEOMETRY;
+        std::string Line = "";
+        while(getline(ShaderFile, Line)){
+            if(Line.find("#Shader ") != std::string::npos){
+                if(Line.find("vertex", 8) != std::string::npos)
+                    CurShader = ShaderType::VERTEX;
+                else if(Line.find("fragment", 8) != std::string::npos)
+                    CurShader = ShaderType::FRAGMENT;
+                else if(Line.find("geometry", 8) != std::string::npos)
+                    CurShader = ShaderType::GEOMETRY;
             }else{
-                if(curShader != shaderType::NONE){
-                    shaders[curShader] << line << '\n';
+                if(CurShader != ShaderType::NONE){
+                    Shaders[CurShader] << Line << '\n';
                 }
             }
         }
 
-        GLuint shaderId[shaderTypes];
-        for(unsigned i = 0; i < shaderTypes; i++){
-            std::string shader = shaders[i].str();
+        GLuint ShaderId[ShaderTypes];
+        for(unsigned i = 0; i < ShaderTypes; i++){
+            std::string Shader = Shaders[i].str();
             switch(i){
-                case shaderType::VERTEX:
-                    shaderId[i] = compileShader(GL_VERTEX_SHADER, shader);
+                case ShaderType::VERTEX:
+                    ShaderId[i] = CompileShader(GL_VERTEX_SHADER, Shader);
                     break;
-                case shaderType::FRAGMENT:
-                    shaderId[i] = compileShader(GL_FRAGMENT_SHADER, shader);
+                case ShaderType::FRAGMENT:
+                    ShaderId[i] = CompileShader(GL_FRAGMENT_SHADER, Shader);
                     break;
-                case shaderType::GEOMETRY:
-                    shaderId[i] = compileShader(GL_GEOMETRY_SHADER, shader);
+                case ShaderType::GEOMETRY:
+                    ShaderId[i] = CompileShader(GL_GEOMETRY_SHADER, Shader);
             }
-            glAttachShader(m_RendererId, shaderId[i]);
+            glAttachShader(m_RendererId, ShaderId[i]);
         }
         glLinkProgram(m_RendererId);
 
-        // Check if the program is a valid shader
-        GLint success;
+        // Check if the program is a valid Shader
+        GLint Successful;
         glValidateProgram(m_RendererId);
-        glGetProgramiv(m_RendererId, GL_VALIDATE_STATUS, &success);
-        if(success == GL_FALSE){
-            int messageLength;
-            glGetProgramiv(m_RendererId, GL_INFO_LOG_LENGTH, &messageLength);
-            char* errMessage = new char[messageLength];
-            if(errMessage == nullptr){
-                LOG_ERR("[Alloc Fail] ", "char* message = new char[messageLength];", 3);
+        glGetProgramiv(m_RendererId, GL_VALIDATE_STATUS, &Successful);
+        if(Successful == GL_FALSE){
+            int MessageLength = 0;
+            glGetProgramiv(m_RendererId, GL_INFO_LOG_LENGTH, &MessageLength);
+            char* ErrMessage = new char[MessageLength];
+            if(ErrMessage == nullptr){
+                LOG_ERR("[Alloc Fail] ", "char* ErrMessage = new char[MessageLength];", 3);
             }else{
-                glGetProgramInfoLog(m_RendererId, messageLength, &messageLength, errMessage);
-                LOG_ERR("[Shader Vallidation Failed] ", errMessage, 2);
+                glGetProgramInfoLog(m_RendererId, MessageLength, &MessageLength, ErrMessage);
+                LOG_ERR("[Shader Vallidation Failed] ", ErrMessage, 2);
             }
 
             m_RendererId = 0;
         }
         
-        for(unsigned i = 0; i < shaderTypes; i++){
-            glDeleteShader(shaderId[i]);
+        for(unsigned i = 0; i < ShaderTypes; i++){
+            glDeleteShader(ShaderId[i]);
         }
     }
 
-    GLuint shader::compileShader(GLenum type, const std::string& source){
-        GLuint shaderId = glCreateShader(type);
-        const char* shaderSrc = source.c_str();
+    GLuint Shader::CompileShader(GLenum type, const std::string& source){
+        GLuint ShaderId = glCreateShader(type);
+        const char* ShaderSrc = source.c_str();
 
-        glShaderSource(shaderId, 1, &shaderSrc, nullptr);
-        glCompileShader(shaderId);
+        glShaderSource(ShaderId, 1, &ShaderSrc, nullptr);
+        glCompileShader(ShaderId);
 
         // Check if the compile was successful
-        GLint success;
-        glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
-        if(success == GL_FALSE){
-            int messageLength;
-            glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &messageLength);
-            char* errMessage = new char[messageLength];
-            if(errMessage == nullptr){
+        GLint Successful;
+        glGetShaderiv(ShaderId, GL_COMPILE_STATUS, &Successful);
+        if(Successful == GL_FALSE){
+            int MessageLength = 0;
+            glGetShaderiv(ShaderId, GL_INFO_LOG_LENGTH, &MessageLength);
+            char* ErrMessage = new char[MessageLength];
+            if(ErrMessage == nullptr){
                 LOG_ERR("[Alloc Fail] ", "char* message = new char[messageLength];", 3);
             }else{
-                glGetShaderInfoLog(shaderId, messageLength, &messageLength, errMessage);
-                LOG_ERR("[Shader Compilation Failed] ", errMessage, 2);
+                glGetShaderInfoLog(ShaderId, MessageLength, &MessageLength, ErrMessage);
+                LOG_ERR("[Shader Compilation Failed] ", ErrMessage, 2);
             }
 
             return 0;
         }
         
-        return shaderId;
+        return ShaderId;
     }
 
-    GLint shader::getUniformLocation(const std::string& uniformName){
-        if(m_UniformLocation.find(uniformName) != m_UniformLocation.end())
-            return m_UniformLocation[uniformName];
+    GLint Shader::GetUniformLocation(const std::string& UniformName){
+        if(m_UniformLocation.find(UniformName) != m_UniformLocation.end())
+            return m_UniformLocation[UniformName];
         
-        GLint uniformLocation = glGetUniformLocation(m_RendererId, uniformName.c_str());
-        if(uniformLocation == -1){
-            LOG_ERR("[Invalid Uniform] " + uniformName, "", 3);
+        GLint UniformLocation = glGetUniformLocation(m_RendererId, UniformName.c_str());
+        if(UniformLocation == -1){
+            LOG_ERR("[Invalid Uniform] " + UniformName, "", 3);
         }
-        m_UniformLocation[uniformName] = uniformLocation;
-        return uniformLocation;
+        m_UniformLocation[UniformName] = UniformLocation;
+        return UniformLocation;
     }
 }

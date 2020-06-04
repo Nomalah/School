@@ -55,20 +55,20 @@ int main(){
         1.0f, 0.0f
     };
     
-    nmlh::gl::core::vertexArray vao;
-    vao.bind();
+    nmlh::core::VertexArray vao;
+    vao.Bind();
 
-    nmlh::gl::core::vertexBufferLayout vbLayout;
-    vbLayout.push<float>(2);
+    nmlh::core::VertexBufferLayout vbLayout;
+    vbLayout.Push<float>(2);
 
-    nmlh::gl::core::vertexBuffer vb;
-    vb.loadBuffer(positions, 6 * vbLayout.getStride());
+    nmlh::core::VertexBuffer vb;
+    vb.LoadBuffer(positions, 6 * vbLayout.GetStride());
 
-    vao.addBuffer(vb, vbLayout);
+    vao.AddBuffer(vb, vbLayout);
     
     // Compile the shader
-    nmlh::gl::util::shader default_shader("shader.glsl");
-    default_shader.bind();
+    nmlh::util::Shader default_shader("shader.glsl");
+    default_shader.Bind();
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)){

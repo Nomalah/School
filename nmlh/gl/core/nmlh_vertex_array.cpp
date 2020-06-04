@@ -1,16 +1,16 @@
 #include "nmlh_vertex_array.h"
 #include <iostream>
-namespace nmlh::gl::core{
-    void vertexArray::addBuffer(const vertexBuffer& vb, const vertexBufferLayout& vbLayout){
-        this->bind();
-        vb.bind();
-        const auto layoutElements = vbLayout.getElements();
+namespace nmlh::core{
+    void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& vbLayout){
+        this->Bind();
+        vb.Bind();
+        const auto LayoutElements = vbLayout.GetElements();
         GLuint64 offset = 0;
-        for(GLuint i = 0; i < layoutElements.size(); i++){
+        for(GLuint i = 0; i < LayoutElements.size(); i++){
             glEnableVertexAttribArray(i);
-            glVertexAttribPointer(i, layoutElements[i].count, layoutElements[i].type, 
-            layoutElements[i].normalized, vbLayout.getStride(), (const void*)offset);
-            offset += layoutElements[i].count * layoutElements[i].sizeOfType();
+            glVertexAttribPointer(i, LayoutElements[i].Count, LayoutElements[i].Type, 
+            LayoutElements[i].IsNormalized, vbLayout.GetStride(), (const void*)offset);
+            offset += LayoutElements[i].Count * LayoutElements[i].SizeOfType();
         } 
     }
 }
