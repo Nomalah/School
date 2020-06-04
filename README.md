@@ -28,12 +28,15 @@ An OpenGL Base Library
 - Templated Uniform Shader Function
 - Index Buffer Abstraction
 - Basic Renderer Singleton/Static class
+- Basic Event Handling
+- Quick TimeStep Class for OnUpdate functions (Header only)
 
 #### Long Term:
 - Textures
 - Integrated Layering
 - Batch Renderer
-- Window Controller
+- Window Controller & Abstraction
+- Application Class
 - Camera Controller
 
 ## Appliction Structure:
