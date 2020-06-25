@@ -1,19 +1,34 @@
 #include <iostream>
-#include "nmlh_alloc.hpp"
 
+//#define NMLH_DEBUG 1
+
+#include "nmlh_dynamic_alloc.hpp"
 
 using namespace std;
+
+class test{
+    public:
+        test(){
+            cout << "test constructor" << endl;
+        }
+
+        ~test(){
+            cout << "test destructor" << endl;
+        }
+};
 
 int main(){
     
     nmlh::allocator gen;
 
-    int* x1 = new int[10];
-    int* x2 = gen.alloc<int>(100);
+    int* x2 = gen.alloc<int>(99);
 
     cout << x2 << endl;
 
-    gen.free(x2);
+    test* y1 = gen.alloc<test>(3);
+    cout << y1 << endl;
+
+    //gen.free(x2);
 
     int* x3 = gen.alloc<int>(5);
 
@@ -24,10 +39,8 @@ int main(){
     int* x4 = gen.alloc<int>(20);
 
     cout << x4 << endl;
-    gen.free(x3);
-    gen.free(x4);
-
-    delete[] x1;
+    //gen.free(x3);
+    //gen.free(x4);
 
     size_t x;
     cin >> x;
