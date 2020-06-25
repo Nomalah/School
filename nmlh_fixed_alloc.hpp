@@ -6,6 +6,7 @@
     #include <sys/mman.h>
     #include <unistd.h>
     #include <iostream>
+    #include <stdint.h>
 #endif
 
 namespace nmlh{
@@ -19,28 +20,14 @@ namespace nmlh{
         nmlhsize_t blockInfo;
         memBlock* nextBlock;
 
-        inline nmlhsize_t size(){
-            return blockInfo & ((~0ULL) << 3);
-        }
-
-        inline bool used(){
-            return blockInfo & (1 << 0);
-        }
-
-        [[maybe_unused]] inline bool flag2(){
-            return blockInfo & (1 << 1);
-        }
-
-        [[maybe_unused]] inline bool flag3(){
-            return blockInfo & (1 << 2);
-        }
-
-        inline nmlhsize_t flags(){
-            return blockInfo & ((1 << 3) - 1);
-        }
+        inline nmlhsize_t size(){return blockInfo & ~7;}
+        inline bool used(){return blockInfo & 1;}
+        [[maybe_unused]] inline bool flag2(){return blockInfo & 2;}
+        [[maybe_unused]] inline bool flag3(){return blockInfo & 4;}
+        inline nmlhsize_t flags(){return blockInfo & 7;}
     };
     
-    inline nmlhsize_t align(nmlhsize_t size){
+    inline nmlhsize_t align(nmlhsize_t size){ 
         return (size + sizeof(void*) - 1) & ~(sizeof(void*) - 1);
     }
 
