@@ -22,6 +22,7 @@ std::string cleanString(std::string word) {
 }
 
 int main() {
+    // File being used.
     std::ifstream file("all-words.txt");
     
     if (file.is_open()) {
@@ -34,6 +35,7 @@ int main() {
             if (clean.length() > 0)
                 fileData.push_back(clean);
         }
+        file.close();
 
         // Sort alphabetically to remove dupes
         std::sort(fileData.begin(), fileData.end());
@@ -52,7 +54,6 @@ int main() {
         for (auto& data : lengthCount) {
             std::cout << "There are/is " << data.second << " word(s) with a length of " << data.first << std::endl;
         }
-        file.close();
     } else {
         std::cout << "Could not open file!";
     }

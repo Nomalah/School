@@ -12,7 +12,7 @@ bool evaluate(uint32_t size, uint32_t toEvaluate, int target, int max) {
     // Use bits of toEvaluate as a permutations for the +/- signs
     int total = 0;
     for (int i = 1; i <= max; i++) {
-        if (size & toEvaluate)
+        if (size & toEvaluate) // Analyze each bit for every permutation 
             total -= i;
         else
             total += i;
@@ -70,4 +70,20 @@ Please enter two numbers, n and m.
 Enter n (1 <= n <= 20): 5
 Enter m (-20 <= m <= 20): 7
 + 1 + 2 + 3 - 4 
+1 solution(s)
+******s-iMac:Assignment Code ******$ ./out
+Please enter two numbers, n and m.
+Enter n (1 <= n <= 20): 20
+Enter m (-20 <= m <= 20): 20
++ 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 - 11 - 12 + 13 + 14 + 15 + 16 + 17 - 18 + 19 + 20 = 20
++ 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 - 11 + 12 - 13 + 14 + 15 + 16 - 17 + 18 + 19 + 20 = 20
++ 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 - 11 + 12 + 13 - 14 + 15 - 16 + 17 + 18 + 19 + 20 = 20
++ 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 + 11 - 12 - 13 + 14 + 15 - 16 + 17 + 18 + 19 + 20 = 20
++ 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 - 9 - 10 + 11 - 12 + 13 - 14 - 15 + 16 + 17 + 18 + 19 + 20 = 20
+...
++ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 - 12 + 13 - 14 - 15 - 16 + 17 - 18 + 19 - 20 = 20
++ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 - 12 + 13 - 14 - 15 + 16 - 17 - 18 - 19 + 20 = 20
++ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 - 13 - 14 - 15 - 16 - 17 + 18 + 19 - 20 = 20
++ 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 + 11 + 12 - 13 - 14 - 15 - 16 + 17 - 18 - 19 + 20 = 20
+7209 solution(s)
 */

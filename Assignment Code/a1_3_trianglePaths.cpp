@@ -36,17 +36,21 @@ int main() {
         grouping[x][y] = num;
         if (!down) {
             if (y == 0) {
+                // Switch directions
                 x++;
                 down = !down;
             } else {
+                // Up & Right
                 x++;
                 y--;
             }
         } else {
             if (x == 0) {
+                // Switch directions
                 y++;
                 down = !down;
             } else {
+                // Down & Left
                 x--;
                 y++;
             }

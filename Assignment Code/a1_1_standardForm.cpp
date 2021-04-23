@@ -40,6 +40,8 @@ int main() {
     bool aExists = a != 0;
     bool bExists = b != 0;
     bool cExists = c != 0;
+
+    // Formatting for AX
     if (aExists) {
         if(a != 1){
             std::cout << a;
@@ -53,13 +55,14 @@ int main() {
         }
     }
 
+    // Formatting for BY
     if (bExists) {
         if (b == -1 && !aExists) {
             std::cout << "-y";
         } else if (b == 1){
             std::cout << "y";
         } else {
-            std::cout << (aExists ? std::abs(b) : b) << "y";
+            std::cout << (aExists ? std::abs(b) : b) << "y"; // Leading - if a does not exist
         }
         
         if (cExists) {
@@ -67,8 +70,9 @@ int main() {
         }
     }
 
+    // Formatting for C
     if (cExists) {
-        std::cout << (aExists || bExists ? std::abs(c) : c);
+        std::cout << std::abs(c);  // c will always exist with something else
     }
     std::cout << " = 0" << std::endl;
 }
@@ -88,4 +92,11 @@ Enter point 1's y component: 2
 Enter point 2's x component: 2
 Enter point 2's y component: -8
 5x + y - 2 = 0
+******s-iMac:Assignment Code ******$ ./out
+Please enter two 2D points.
+Enter point 1's x component: 2
+Enter point 1's y component: 0
+Enter point 2's x component: 2
+Enter point 2's y component: 2
+x - 2 = 0
 */
