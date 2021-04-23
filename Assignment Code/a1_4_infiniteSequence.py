@@ -28,7 +28,7 @@ for n in range(1, n+1):
 
 print(numerator, "/", denomonator)
 
-# Marians-iMac:Assignment Code marian$ python3 a1_4_infiniteSequence.py
+# ******s-iMac:Assignment Code ******$ python3 a1_4_infiniteSequence.py
 # Please input an integer
 # 7
 # 13068 / 5040
