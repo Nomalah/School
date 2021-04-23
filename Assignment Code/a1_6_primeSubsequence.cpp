@@ -46,16 +46,16 @@ int main() {
 
     // Subsequence sums
     for (std::size_t i = 0; i < inputSequence.size(); i++) {
-        int total = inputSequence[i];
+        int subsequenceSum = inputSequence[i];
         for (std::size_t j = i + 1; j < inputSequence.size(); j++) {
-            total += inputSequence[j];
+            subsequenceSum += inputSequence[j];
             // Subsequence sum is a prime
-            if(isPrime[total]){
+            if(isPrime[subsequenceSum]){
                 std::cout << inputSequence[i];
                 for (std::size_t c = i + 1; c <= j; c++) {
                     std::cout << " + " << inputSequence[c];
                 }
-                std::cout << " = " << total << std::endl;
+                std::cout << " = " << subsequenceSum << std::endl;
             }
         }
     }
