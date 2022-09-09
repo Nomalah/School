@@ -1,0 +1,18 @@
+[settings]
+arch=x86_64
+arch_build=x86_64
+build_type=Release
+compiler=gcc
+compiler.libcxx=libstdc++11
+compiler.version=9.4
+os=Linux
+os_build=Linux
+[options]
+[build_requires]
+[env]
+# these values are passed onto CMake, make sure they match the compiler verision above
+CMAKE_CXX_COMPILER=/usr/bin/g++-9
+CMAKE_CC_COMPILER=/usr/bin/gcc-9
+CXX=/usr/bin/g++-9
+CC=/usr/bin/gcc-9
+CMAKE_C_FLAGS="-O0 -fno-strict-aliasing -Wall"
