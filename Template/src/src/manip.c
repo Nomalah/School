@@ -3,6 +3,6 @@
 
 #include "manip.h"
 
-int64_t multiplyByFive(int64_t in){
+int64_t multiplyByFive(int64_t in) {
     return in * 5;
 }
