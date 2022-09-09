@@ -1,8 +1,11 @@
 set(CODE_FILES
     main.c
+    src/manip.c
 )
 
-set(HEADER_FILES)
+set(HEADER_FILES
+    include/manip.h
+)
 
 add_executable(template ${CODE_FILES} ${HEADER_FILES})
 target_include_directories(template

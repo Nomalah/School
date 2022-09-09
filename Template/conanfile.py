@@ -1,31 +1,28 @@
-from conans import ConanFile, errors
-from conan.tools.cmake import CMake, CMakeToolchain
-from conan.tools.layout import basic_layout, cmake_layout
-from conan.tools.build import cross_building
+from conans import ConanFile
+from conan.tools.cmake import CMake
+from conan.tools.layout import cmake_layout
 from conan.tools.files import copy
 import os
 import shutil
 import json
-import glob
 import subprocess
 
-class Discovery(ConanFile):
+
+class Assignment(ConanFile):
     scm = {
         "type": "git",
-        "url":"auto",
+        "url": "auto",
         "revision": "auto"
     }
 
-    name = "Discovery"
-    version = "0.1.0"
-    license = "Voyis"
-    description = "Discovery"
+    name = "Assignment"
+    version = "0.0.0"
     settings = "os", "compiler", "build_type", "arch"
-    
-    options = { }
-    default_options = { }
 
-    generators = "CMakeDeps"
+    options = {}
+    default_options = {}
+
+    generators = "CMakeToolchain", "CMakeDeps"
     exports_sources = "CMakeLists.txt", "src/*", "include/*", "test/*", "*.md", "*.cmake"
 
     def requirements(self):
@@ -33,7 +30,7 @@ class Discovery(ConanFile):
 
     def configure(self):
         pass
-    
+
     def _fix_cmake_presets(self):
         # remove the CMakeUserPresets file until Microsoft actually updates the file
         print("Copying CmakePresets.json to the root dir")
@@ -56,9 +53,6 @@ class Discovery(ConanFile):
         )
 
     def generate(self):
-        tc = CMakeToolchain(self)
-        tc.generate()
-
         self._fix_cmake_presets()
 
     def layout(self):
