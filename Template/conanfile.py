@@ -1,5 +1,5 @@
 from conans import ConanFile
-from conan.tools.cmake import CMake
+from conan.tools.cmake import CMake, CMakeToolchain
 from conan.tools.layout import cmake_layout
 from conan.tools.files import copy
 import os
@@ -53,7 +53,7 @@ class Assignment(ConanFile):
         )
 
     def generate(self):
-        self._fix_cmake_presets()
+        pass
 
     def layout(self):
         cmake_layout(self)
