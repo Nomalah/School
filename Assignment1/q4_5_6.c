@@ -32,8 +32,8 @@ int isPerfectNumber(int n)
 // Question 6
 int main()
 {
-    // Loop through numbers 1 -> 10000 and check if they're perfect numbers
-    for (int i = 1; i < 10000; i++)
+    // Loop through numbers 9999 -> 1 and check if they're perfect numbers
+    for (int i = 9999; i > 0; i--)
     {
         if (isPerfectNumber(i))
         {
