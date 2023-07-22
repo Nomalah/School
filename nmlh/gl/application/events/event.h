@@ -39,6 +39,8 @@ namespace nmlh{
             Event& m_ToHandle;
 
         public:
+            EventHandler(Event& ToHandle) : m_ToHandle(ToHandle){}
+
             
     };
 }
