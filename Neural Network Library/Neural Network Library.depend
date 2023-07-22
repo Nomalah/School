@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1578286886 source:d:\coding\neural network library\main.cpp
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<cmath>
+

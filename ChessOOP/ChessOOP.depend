@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1581603576 source:d:\coding\chessoop\main.cpp
+	<iostream>
+	"include.h"
+
+1581536656 source:d:\coding\chessoop\board\action.cpp
+	"../include.h"
+
+1582774076 d:\coding\chessoop\board\action.h
+	"../include.h"
+
+1581477136 source:d:\coding\chessoop\pieces\piece.cpp
+	"../include.h"
+
+1581603474 d:\coding\chessoop\pieces\piece.h
+	<string>
+	"../include.h"
+
+1581603242 d:\coding\chessoop\board\board.h
+	"../include.h"
+
+1581602844 source:d:\coding\chessoop\pieces\king.cpp
+	"../include.h"
+
+1581602844 d:\coding\chessoop\pieces\king.h
+	"../include.h"
+
+1581603960 source:d:\coding\chessoop\board\board.cpp
+	<cmath>
+	<iostream>
+	"../include.h"
+
+1581518858 d:\coding\chessoop\include.h
+	"Board/board.h"
+	"Board/action.h"
+	"Pieces/piece.h"
+	"Pieces/king.h"
+	"Pieces/rook.h"
+	"Pieces/vacant.h"
+
+1581516554 d:\coding\chessoop\pieces\rook.h
+	"../include.h"
+
+1581516554 d:\coding\chessoop\pieces\vacant.h
+	"../include.h"
+
+1581604004 source:d:\coding\chessoop\pieces\vacant.cpp
+	"../include.h"
+
+1581602844 source:d:\coding\chessoop\pieces\rook.cpp
+	"../include.h"
+

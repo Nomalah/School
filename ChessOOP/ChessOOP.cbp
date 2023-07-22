@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ChessOOP" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ChessOOP" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="Board" />
+					<Add directory="Pieces" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ChessOOP" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="Board" />
+					<Add directory="Pieces" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Board/action.cpp" />
+		<Unit filename="Board/action.h" />
+		<Unit filename="Board/board.cpp" />
+		<Unit filename="Board/board.h" />
+		<Unit filename="Pieces/king.cpp" />
+		<Unit filename="Pieces/king.h" />
+		<Unit filename="Pieces/piece.cpp" />
+		<Unit filename="Pieces/piece.h" />
+		<Unit filename="Pieces/rook.cpp" />
+		<Unit filename="Pieces/rook.h" />
+		<Unit filename="Pieces/vacant.cpp" />
+		<Unit filename="Pieces/vacant.h" />
+		<Unit filename="include.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,72 @@
+# depslib dependency file v1.0
+1576595820 source:h:\profile\desktop\ics3ui_sum_chess\minimax.cpp
+	<iostream>
+	"eval.h"
+	"moves.h"
+	"makemove.h"
+	"minimax.h"
+
+1575750755 h:\profile\desktop\ics3ui_sum_chess\eval.h
+
+1575762426 h:\profile\desktop\ics3ui_sum_chess\moves.h
+
+1575750688 source:h:\profile\desktop\ics3ui_sum_chess\eval.cpp
+	<cmath>
+
+1576595631 source:h:\profile\desktop\ics3ui_sum_chess\main.cpp
+	<iostream>
+	<fstream>
+	<cmath>
+	<string>
+	"minimax.h"
+	"moves.h"
+	"makemove.h"
+
+1575743725 h:\profile\desktop\ics3ui_sum_chess\minimax.h
+
+1576596690 source:h:\profile\desktop\ics3ui_sum_chess\moves.cpp
+	<cmath>
+	<iostream>
+
+1576245932 source:h:\profile\desktop\ics3ui_sum_chess\makemove.cpp
+	<cmath>
+	<iostream>
+
+1575908066 h:\profile\desktop\ics3ui_sum_chess\makemove.h
+
+1578199336 source:d:\coding\ics3ui_sum_chess\eval.cpp
+	<cmath>
+	<iostream>
+
+1578199478 source:d:\coding\ics3ui_sum_chess\main.cpp
+	<iostream>
+	<fstream>
+	<cmath>
+	<string>
+	"minimax.h"
+	"moves.h"
+	"makemove.h"
+
+1576857632 d:\coding\ics3ui_sum_chess\minimax.h
+
+1576857632 d:\coding\ics3ui_sum_chess\moves.h
+
+1576857632 d:\coding\ics3ui_sum_chess\makemove.h
+
+1576857632 source:d:\coding\ics3ui_sum_chess\makemove.cpp
+	<cmath>
+	<iostream>
+
+1578202442 source:d:\coding\ics3ui_sum_chess\minimax.cpp
+	<iostream>
+	"eval.h"
+	"moves.h"
+	"makemove.h"
+	"minimax.h"
+
+1576857630 d:\coding\ics3ui_sum_chess\eval.h
+
+1578200620 source:d:\coding\ics3ui_sum_chess\moves.cpp
+	<cmath>
+	<iostream>
+

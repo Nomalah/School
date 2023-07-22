@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1578089502 source:d:\coding\assignment 4\assign4_10\main.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<stdio.h>
+
