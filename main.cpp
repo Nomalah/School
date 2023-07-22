@@ -1,13 +1,16 @@
 #include <iostream>
 
 //#define NMLH_DEBUG 1
-
+#include <chrono>
 #include "nmlh_dynamic_alloc.hpp"
 
 using namespace std;
 
 class test{
     public:
+        int x;
+        int y;
+
         test(){
             cout << "test constructor" << endl;
         }
@@ -21,30 +24,10 @@ int main(){
     
     nmlh::allocator gen;
 
-    int* x2 = gen.alloc<int>(99);
-
-    cout << x2 << endl;
-
     test* y1 = gen.alloc<test>(3);
     cout << y1 << endl;
+    gen.dealloc(y1);
 
-    //gen.free(x2);
-
-    int* x3 = gen.alloc<int>(5);
-
-    
-    cout << x3 << endl;
-    
-
-    int* x4 = gen.alloc<int>(20);
-
-    cout << x4 << endl;
-    //gen.free(x3);
-    //gen.free(x4);
-
-    size_t x;
-    cin >> x;
-    cout << nmlh::align(x) << endl;
-    cout << getpagesize() << endl;
+    cin.get();
     return 0;
 }
