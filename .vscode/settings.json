@@ -60,6 +60,7 @@
         "vector": "cpp",
         "*.tcc": "cpp",
         "hashtable": "cpp",
-        "__memory": "cpp"
+        "__memory": "cpp",
+        "list": "cpp"
     }
 }
