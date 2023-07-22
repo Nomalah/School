@@ -6,25 +6,20 @@
 
 #include "matrix.h"
 
-//#define INDEX(x, y) (x + y * initial_columns)
-//unsigned num_of_columns;
-//unsigned num_of_rows;
-//unsigned long long size;
-//double* data; // Data is stored linearly (x + y * num_of_columns)
-
 // Normal constructor
 matrix::matrix(unsigned initial_columns, unsigned initial_rows)
-    : num_of_columns(initial_columns), num_of_rows(initial_rows), size(initial_columns * initial_rows){
-    data = new double[size];
+    : num_of_columns(initial_columns), num_of_rows(initial_rows), size(initial_columns * initial_rows), data(new double[size]){
+}
+
+matrix::matrix(const std::vector<double>& vec_init)
+    : num_of_columns(1), num_of_rows(vec_init.size()), size(vec_init.size()), data(new double[size]){
+    memcpy(data, vec_init.data(), size*sizeof(double));
 }
 
 // Copy constructor
 matrix::matrix(const matrix& copy_src)
-    : num_of_columns(copy_src.num_of_columns), num_of_rows(copy_src.num_of_rows), size(copy_src.size){
-    data = new double[size];
+    : num_of_columns(copy_src.num_of_columns), num_of_rows(copy_src.num_of_rows), size(copy_src.size), data(new double[size]){
     memcpy(data, copy_src.data, size*sizeof(double));
-    /*for(unsigned long long index = 0; index < size; index++)
-        data[index] = copy_src.data[index];*/
 }
 
 // Move constructor
@@ -40,8 +35,6 @@ matrix& matrix::operator=(const matrix& copy_rhs){
         num_of_columns = copy_rhs.num_of_columns;
         num_of_rows = copy_rhs.num_of_rows;
         size = copy_rhs.size; 
-        data = copy_rhs.data;
-
         data = new double[size];
         memcpy(data, copy_rhs.data, size*sizeof(double));
     }
@@ -82,11 +75,6 @@ void matrix::print(){
             std::cout << std::endl;
         std::cout << data[index] << ' ';
     }
-}
-
-void matrix::map_function(std::function<double(double)> func){
-    for(unsigned long long index = 0; index < size; index++)
-        data[index] = func(data[index]);
 }
 
 matrix operator+(const matrix& add_lhs, const matrix& add_rhs){

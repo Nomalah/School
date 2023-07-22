@@ -1,8 +1,7 @@
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <vector>
-//#include <initializer_list>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "matrix.h"
 #include "neuralNetwork.h"
@@ -16,9 +15,9 @@ void print(std::vector<double> to_print){
 }
 
 
-void randomize(matrix& rhs){
+inline void randomize(matrix& rhs){
     rhs.map_function([](double val) -> double{
-        return (double)rand() / RAND_MAX * 2 - 1;
+        return rand() / (RAND_MAX + 1.);
     });
 }
 
@@ -41,110 +40,59 @@ neural_network::~neural_network(){
 }
 
 std::vector<double> neural_network::think(std::vector<double> input_arr){
-    matrix input(1, layer_sizes[0]);
-    
-    {
-        unsigned i = 0;
-        input.map_function([&](double val) -> double{
-            return input_arr[i++];
-        });
-    }
+    matrix input{input_arr};
 
     matrix output;
     for(int i = 0; i < layer_sizes.size()-1; i++){
-        output = dot(weights[i], input);
-        output = output + bias[i];
-        output.map_function([](double val){
-            return 1/(1+exp(-val));
-        });
-        input = output;
+        output = dot(weights[i], input); 
+        output = output + bias[i]; 
+        output.map_function(neural_network::sigmoid);
+        input = output; 
     }
 
-    output.map_function([](double val) -> double{
-        return log(val/(1-val));
-    });
+    output.map_function(neural_network::desigmoid);
     return output;
 }
 
-void neural_network::train(std::vector<double> training_data, std::vector<double> training_target){
-    matrix input (1, layer_sizes[0]);
+void neural_network::train(std::vector<double>& training_data, std::vector<double>& training_target){
+    matrix input{training_data};
 
-    {
-        unsigned i = 0;
-        input.map_function([&i, &training_data](double val) -> double{
-            return training_data[i++];
-        });
-    }
+    std::vector<matrix> layerOutputs(layer_sizes.size());
 
-    matrix output;
-    
-    std::vector<matrix> layerOutputs;
-    layerOutputs.reserve(layer_sizes.size());
-    for (int i = 0; i < layer_sizes.size(); i++){
-        layerOutputs.push_back(matrix());
-    }
-    layerOutputs[0] = input;
+    layerOutputs[0] = input; // copy assignment
     
     for (int i = 0; i < layer_sizes.size()-1; i++){
-        output = dot(weights[i], input);
-        output = output + bias[i];
-        output.map_function([](double val) -> double{
-            return 1/(1+exp(-val));
-        });
+        matrix output{dot(weights[i], input) + bias[i]};
+        output.map_function(neural_network::sigmoid);
         input = output;
         layerOutputs[i+1] = output;
     }
     
-    matrix targets(1, layer_sizes[layer_sizes.size()-1]);
+    matrix targets{training_target};
 
-    {
-        unsigned i = 0;
-        targets.map_function([&i, &training_target](double val) -> double{
-            return training_target[i++];
-        });
-    }
-
-    std::vector<matrix> layerErrors;
-    layerErrors.reserve(layer_sizes.size()-1);
-
-    for (int i = 0; i < layer_sizes.size()-1; i++){
-        layerErrors.push_back(matrix());
-    }
+    std::vector<matrix> layerErrors(layer_sizes.size()-1);
 
     matrix deSigmoidOut(layerOutputs[layer_sizes.size()-1]);
-    deSigmoidOut.map_function([](double val) -> double{
-        return log(val/(1-val));
-    });
+    deSigmoidOut.map_function(neural_network::desigmoid);
 
-    layerErrors[layer_sizes.size()-2] = targets - deSigmoidOut;
+    layerErrors[layer_sizes.size()-2] = targets - deSigmoidOut; // one move
 
-    //cout << "adjust Weights" << endl;
     for (int i = layer_sizes.size()-1; i > 0; i--){
-        matrix gradient (layerOutputs[i]);
-        //gradient = (*layerOutputs[i]);
-
+        matrix gradient{layerOutputs[i]};
+        
         gradient.map_function([](double val) -> double{
-            return val * (1 - val);
+            return val * (1 - val) * 0.1;
         });
 
-        gradient = gradient * layerErrors[i-1];
+        gradient = gradient * layerErrors[i-1]; // one move
 
-        gradient.map_function([](double val) -> double{
-            return val * 0.1;
-        });
-
-        matrix layerOutputT = transpose(layerOutputs[i-1]);
-        matrix weightsDeltas = dot(gradient, layerOutputT);
-
-        weights[i-1] = weights[i-1] + weightsDeltas;
+        weights[i-1] = weights[i-1] + dot(gradient, transpose(layerOutputs[i-1]));
         bias[i-1] = bias[i-1] + gradient;
-    
+
         if(i==1)
             break;
 
-        matrix weightT(transpose(weights[i-1]));
-        layerErrors[i-2] = dot(weightT, layerErrors[i-1]);
+        layerErrors[i-2] = dot(transpose(weights[i-1]), layerErrors[i-1]); // 2 moves
     }
-    return;
 }
 

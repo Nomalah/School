@@ -2,7 +2,7 @@
 #define MATRIX_H
 
 #include <vector>
-#include <functional>
+
 
 // matrix class
 class matrix{
@@ -14,6 +14,7 @@ class matrix{
     public:
         // Normal constructor
         matrix(unsigned initial_columns = 0, unsigned initial_rows = 0);
+        matrix(const std::vector<double>& vec_init);
         
         // Copy constructor
         matrix(const matrix& copy_src);
@@ -30,7 +31,8 @@ class matrix{
         // Destructor
         ~matrix();
 
-        void map_function(std::function<double(double)> func);
+        template<class map_operator>
+        void map_function(map_operator func);
         void print();
 
         operator std::vector<double>() const;
@@ -43,11 +45,6 @@ class matrix{
         friend matrix dot(const matrix& dot_lhs, const matrix& dot_rhs);
 };
 
-matrix transpose(const matrix& trans_rhs);
 
-matrix operator+(const matrix& add_lhs, const matrix& add_rhs);
-matrix operator-(const matrix& sub_lhs, const matrix& sub_rhs);
-matrix operator*(const matrix& mult_lhs, const matrix& mult_rhs);
-matrix dot(const matrix& dot_lhs, const matrix& dot_rhs);
 
 #endif // MATRIX_H

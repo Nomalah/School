@@ -1,6 +1,6 @@
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 #include <vector>
 
 #include "matrix.h"
@@ -8,46 +8,40 @@
 
 using namespace std;
 
-
+double randMToN(double M, double N)
+{
+    return M + (rand() / ( RAND_MAX / (N-M) ) ) ;  
+}
 
 int main(){
+    // seed the random number gen
     srand(time(NULL));
-    //cout << sizeof(matrix) << endl;
-    /*
-    matrix my_matrix(3, 2);
-    {
-        int i = 0;
-        my_matrix.map_function([&i](double) -> double{
-            return i++;
-        });
-    }
-    matrix my_matrix2(3, 2);
-    {
-        int i = 0;
-        my_matrix.map_function([&i](double) -> double{
-            return i++;
-        });
-    }
-    my_matrix.print();*/
     
+    // 2 inputs, 4 hidden nodes, 1 output
     neural_network my_net({2, 4, 1});
 
-    cout << "Input: 0, 0: " << my_net.think({0, 0})[0] << endl;
-    cout << "Input: 0, 1: " << my_net.think({0, 1})[0] << endl;
-    cout << "Input: 1, 0: " << my_net.think({1, 0})[0] << endl;
-    cout << "Input: 1, 1: " << my_net.think({1, 1})[0] << endl;
+    vector<vector<double>> test_inputs = {{8, 2}, {2, 0}, {5, 7}, {2, 2}};
+    vector<vector<double>> test_outputs = {{16}, {0}, {35}, {4}};
 
-    cout << endl << "training..." << endl << endl;
-    vector<vector<double>> training_inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-    vector<vector<double>> training_outputs = {{0}, {1}, {1}, {0}};
-    //mem fault in training
-    for(int i = 0; i < 1000000; i++){
-        int x = rand() % 4;
-        my_net.train(training_inputs[x], training_outputs[x]);
+    for(int i = 0; i < 4; i++){
+        cout << "Input: " << test_inputs[i][0] << ", " << test_inputs[i][1] << ": ";
+        cout << my_net.think(test_inputs[i])[0] << endl;
     }
-    cout << "Input: 0, 0: " << my_net.think({0, 0})[0] << endl;
-    cout << "Input: 0, 1: " << my_net.think({0, 1})[0] << endl;
-    cout << "Input: 1, 0: " << my_net.think({1, 0})[0] << endl;
-    cout << "Input: 1, 1: " << my_net.think({1, 1})[0] << endl;
+
+    cout << "\ntraining...\n\n";
+
+    // Train 1 million times
+    for(int i = 0; i < 10; i++){
+        vector<double> training_inputs = {randMToN(0.0f, 1000.0f), randMToN(0.0f, 1000.0f)};
+        vector<double> training_outputs = {training_inputs[0] * training_inputs[1]};
+        my_net.train(training_inputs, training_outputs);
+        cout << "Input: " << test_inputs[0][0] << ", " << test_inputs[0][1] << ": ";
+        cout << my_net.think(test_inputs[0])[0] << '\r';
+    }
+
+    for(int i = 0; i < 4; i++){
+        cout << "Input: " << test_inputs[i][0] << ", " << test_inputs[i][1] << ": ";
+        cout << my_net.think(test_inputs[i])[0] << endl;
+    }
     return 0;
 }
