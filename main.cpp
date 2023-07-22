@@ -22,7 +22,8 @@ int main(){
             if ((int)n2 == n2)
                 cout << n1 * (n_size - 1) + (int)n2 << "\n";
         }
-
+        
+        #pragma omp parallel for
         for (int n_len = 4; n_len <= 16; n_len += 2){
             n_size *= 10;
 

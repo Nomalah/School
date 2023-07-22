@@ -8,8 +8,8 @@
             "args": [
                 "-std=c++17",
                 "-stdlib=libc++",
-                "-g",
-                "${workspaceFolder}/*.cpp",
+                "${workspaceFolder}/timer.cpp",
+                "${workspaceFolder}/main.cpp",
                 "-o",
                 "${workspaceFolder}/out"
             ],
