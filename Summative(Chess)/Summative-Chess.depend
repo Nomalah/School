@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1575385544 source:/Users/marian/Desktop/Programming/Summative(Chess)/eval.cpp
+
+1575504395 source:/Users/marian/Desktop/Programming/Summative(Chess)/moves.cpp
+
+1575504664 source:/Users/marian/Desktop/Programming/Summative(Chess)/main.cpp
+	<iostream>
+	"eval.h"
+	"moves.h"
+	"minimax.h"
+
+1575385546 /Users/marian/Desktop/Programming/Summative(Chess)/eval.h
+
+1575385546 /Users/marian/Desktop/Programming/Summative(Chess)/moves.h
+
+1575504664 /Users/marian/Desktop/Programming/Summative(Chess)/minimax.h
+
+1575504761 source:/Users/marian/Desktop/Programming/Summative(Chess)/minimax.cpp
+	"moves.h"
+

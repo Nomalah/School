@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1575522890 source:/Users/marian/Desktop/Programming/ICS3UI_Chess/eval.cpp
+
+1575522891 source:/Users/marian/Desktop/Programming/ICS3UI_Chess/main.cpp
+	<iostream>
+	"eval.h"
+	"moves.h"
+	"minimax.h"
+
+1575522891 /Users/marian/Desktop/Programming/ICS3UI_Chess/eval.h
+
+1575522891 /Users/marian/Desktop/Programming/ICS3UI_Chess/moves.h
+
+1575522891 /Users/marian/Desktop/Programming/ICS3UI_Chess/minimax.h
+
+1575522891 source:/Users/marian/Desktop/Programming/ICS3UI_Chess/moves.cpp
+

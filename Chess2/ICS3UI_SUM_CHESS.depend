@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1575553451 source:h:\profile\desktop\ics3ui_sum_chess\minimax.cpp
+	"eval.h"
+	"moves.h"
+
+1575553348 h:\profile\desktop\ics3ui_sum_chess\eval.h
+
+1575553352 h:\profile\desktop\ics3ui_sum_chess\moves.h
+
+1575567221 source:h:\profile\desktop\ics3ui_sum_chess\eval.cpp
+
+1575567221 source:h:\profile\desktop\ics3ui_sum_chess\main.cpp
+	<iostream>
+	"minimax.h"
+
+1575553349 h:\profile\desktop\ics3ui_sum_chess\minimax.h
+
+1575567756 source:h:\profile\desktop\ics3ui_sum_chess\moves.cpp
+
