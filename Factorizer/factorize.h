@@ -1,0 +1,1 @@
+int* factorize(int input_number);
