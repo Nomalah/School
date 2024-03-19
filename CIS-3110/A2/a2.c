@@ -126,6 +126,10 @@ void* spell_check(void* args) {
     char input_word[512] = {};
 
     FILE* dict_file = fopen(dictionary_path, "r");
+    if (dict_file == NULL) {
+        printf("Unable to open %s!\n", dictionary_path);
+        pthread_exit(NULL);
+    }
     int dictionary_length = 0;
     int dictionary_capacity = 1;
     char** dictionary_words = malloc(dictionary_capacity * sizeof(char*));
@@ -147,6 +151,10 @@ void* spell_check(void* args) {
     fclose(dict_file);
 
     FILE* input_file = fopen(input_path, "r");
+    if (input_file == NULL) {
+        printf("Unable to open %s!\n", input_path);
+        pthread_exit(NULL);
+    }
     SpellingMistakes* spelling_mistakes = malloc(sizeof(SpellingMistakes));
     initSpellingMistakes(spelling_mistakes);
     while (fscanf(input_file, "%s\n", input_word) == 1) {
@@ -295,6 +303,9 @@ int main(int argc, char* argv[]) {
     for (int i = 1; i < num_of_threads; i++) {
         SpellingMistakes* local_mistakes;
         pthread_join(threads[i], (void**)&local_mistakes);
+        if (local_mistakes == NULL) {
+            continue;
+        }
         mergeSpellingMistakes(&global_mistakes, local_mistakes);
         deinitSpellingMistakes(local_mistakes);
         free(local_mistakes);
