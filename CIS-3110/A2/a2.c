@@ -54,6 +54,7 @@ void initSpellingMistakes(SpellingMistakes* spelling_mistakes) {
     spelling_mistakes->word_counts = malloc(spelling_mistakes->capacity * sizeof(int));
 }
 
+// Release all resources accociated with spelling mistakes
 void deinitSpellingMistakes(SpellingMistakes* spelling_mistakes) {
     for (int i = 0; i < spelling_mistakes->unique_count; i++) {
         free(spelling_mistakes->words[i]);
@@ -63,6 +64,7 @@ void deinitSpellingMistakes(SpellingMistakes* spelling_mistakes) {
 }
 
 void checkOrIncreaseWordCapacitySpellingMistakes(SpellingMistakes* spelling_mistakes) {
+    // Increases capacity of the spelling mistakes arrays if the capacity has been reached.
     if (spelling_mistakes->unique_count == spelling_mistakes->capacity) {
         spelling_mistakes->capacity *= 2;
         char** temp = malloc(spelling_mistakes->capacity * sizeof(char*));
@@ -102,6 +104,7 @@ void mergeSpellingMistakes(SpellingMistakes* a, SpellingMistakes* b) {
     }
 }
 
+// Simple bubble sort for sorting by greatest count of each spelling mistake
 void sortSpellingMistakes(SpellingMistakes* spelling_mistakes) {
     for (int i = 0; i < spelling_mistakes->unique_count; i++) {
         for (int j = i + 1; j < spelling_mistakes->unique_count; j++) {
@@ -109,6 +112,7 @@ void sortSpellingMistakes(SpellingMistakes* spelling_mistakes) {
                 int tmp = spelling_mistakes->word_counts[j - 1];
                 spelling_mistakes->word_counts[j - 1] = spelling_mistakes->word_counts[j];
                 spelling_mistakes->word_counts[j] = tmp;
+
                 char* tmp_2 = spelling_mistakes->words[j - 1];
                 spelling_mistakes->words[j - 1] = spelling_mistakes->words[j];
                 spelling_mistakes->words[j] = tmp_2;
@@ -120,24 +124,29 @@ void sortSpellingMistakes(SpellingMistakes* spelling_mistakes) {
 
 
 void* spell_check(void* args) {
+    // Decode the thread inputs
     char* dictionary_path = ((char**)args)[0];
     char* input_path = ((char**)args)[1];
 
     char input_word[512] = {};
 
+    // Open the dictionary file & error check
     FILE* dict_file = fopen(dictionary_path, "r");
     if (dict_file == NULL) {
         printf("Unable to open %s!\n", dictionary_path);
         pthread_exit(NULL);
     }
+
     int dictionary_length = 0;
     int dictionary_capacity = 1;
     char** dictionary_words = malloc(dictionary_capacity * sizeof(char*));
     while (fscanf(dict_file, "%s\n", input_word) == 1) {
+        // Clean the input string and add it to the dictionary list
         removePunctAndLowerStr(input_word);
         dictionary_words[dictionary_length++] = strdup(input_word);
         memset(input_word, 0, 512);
 
+        // Reached capacity of our array - add space.
         if (dictionary_length == dictionary_capacity) {
             dictionary_capacity *= 2;
             char** temp = malloc(dictionary_capacity * sizeof(char*));
@@ -150,33 +159,32 @@ void* spell_check(void* args) {
     }
     fclose(dict_file);
 
+    // Open the input file & error check
     FILE* input_file = fopen(input_path, "r");
     if (input_file == NULL) {
         printf("Unable to open %s!\n", input_path);
         pthread_exit(NULL);
     }
+
     SpellingMistakes* spelling_mistakes = malloc(sizeof(SpellingMistakes));
     initSpellingMistakes(spelling_mistakes);
     while (fscanf(input_file, "%s\n", input_word) == 1) {
+        // Remove special characters and check if the word is in the dictionary
         removePunctAndLowerStr(input_word);
-        int spelt_wrong = 1;
         for (int i = 0; i < dictionary_length; i++) {
             if (strcmp(dictionary_words[i], input_word) == 0) {
-                spelt_wrong = 0;
+                addOrIncrementWordSpellingMistakes(spelling_mistakes, input_word, 1);
                 break;
             }
         }
-        if (!spelt_wrong) {
-            continue;
-        }
-
-        addOrIncrementWordSpellingMistakes(spelling_mistakes, input_word, 1);
         memset(input_word, 0, 512);
     }
     fclose(input_file);
 
+    // Sort the spelling mistakes by greatest to least count for easy printing.
     sortSpellingMistakes(spelling_mistakes);
 
+    // Print out the summary to the output file while the lock is active
     pthread_mutex_lock(&file_lock);
     if (spelling_mistakes->unique_count == 0) {
         fprintf(output_file, "%s %d %s %s %s\n", input_path, spelling_mistakes->total_mistake_count, "", "", "");
@@ -202,28 +210,27 @@ void* spell_check(void* args) {
 
 
 int main(int argc, char* argv[]) {
+    // Parse CLI
     int display_summary = 1;
-    int num_of_threads = 1;
-    pthread_t* threads = malloc(num_of_threads * sizeof(pthread_t));
-
-    output_file = fopen("dhart04_A2.out", "w");
-
     if (argc > 2) {
         printf("Too many arguments, terminating...\n");
-        free(threads);
-        fclose(output_file);
         return -1;
     }
     else if (argc == 2) {
         if (strcmp(argv[1], "-l") != 0) {
             printf("Unknown argument, terminating...\n");
-            free(threads);
-            fclose(output_file);
             return -1;
         }
         display_summary = 0;
     }
 
+    int num_of_threads = 1;
+    pthread_t* threads = malloc(num_of_threads * sizeof(pthread_t));
+
+    // Open shared output file
+    output_file = fopen("dhart04_A2.out", "w");
+
+    // Main menu
     while (1) {
         int main_menu_choice = 2;
         printf("1. Start a new spellchecking task\n");
@@ -245,6 +252,7 @@ int main(int argc, char* argv[]) {
             break;
         }
 
+        // Spellcheck task submenu
         while (1) {
             int sub_menu_choice = 2;
             printf("1. Start a new spellchecking task\n");
@@ -266,6 +274,7 @@ int main(int argc, char* argv[]) {
                 break;
             }
 
+            // Here we get the user input for the dictionary and input filepaths
             while (1) {
                 char dictionary_filepath[4096] = {};
                 printf("Enter dictionary filepath: ");
@@ -280,9 +289,12 @@ int main(int argc, char* argv[]) {
                     printf("Invalid input...\n");
                     continue;
                 }
-                char* input_args[2] = { dictionary_filepath, input_filepath };
 
+                // The input args to a pthread is a void*, so we need to combine our arguments into a pointer (an array will decay to a pointer)
+                char* input_args[2] = { dictionary_filepath, input_filepath };
                 pthread_create(&threads[0], NULL, spell_check, input_args);
+
+                // Reallocate the thread array and shuffle active threads over so that threads[0] is always empty in prep for the next thread spawn.
                 num_of_threads++;
                 pthread_t* temp = malloc(num_of_threads * sizeof(pthread_t));
                 for (int i = 1; i < num_of_threads; i++) {
@@ -298,12 +310,13 @@ int main(int argc, char* argv[]) {
 
     }
 
+    // Join together all running/completed threads and compile all of their results together
     SpellingMistakes global_mistakes;
     initSpellingMistakes(&global_mistakes);
     for (int i = 1; i < num_of_threads; i++) {
         SpellingMistakes* local_mistakes;
         pthread_join(threads[i], (void**)&local_mistakes);
-        if (local_mistakes == NULL) {
+        if (local_mistakes == NULL) { // If this was reached the thread returned with an error
             continue;
         }
         mergeSpellingMistakes(&global_mistakes, local_mistakes);
@@ -311,9 +324,12 @@ int main(int argc, char* argv[]) {
         free(local_mistakes);
     }
 
-    sortSpellingMistakes(&global_mistakes);
 
     if (display_summary) {
+        // Sort the spelling mistakes by count so that we can easily display the summary
+        sortSpellingMistakes(&global_mistakes);
+
+        // Print the summary
         printf("Number of files processed: %d\n", num_of_threads - 1);
         printf("Number of spelling errors: %d\n", global_mistakes.total_mistake_count);
 
@@ -330,6 +346,8 @@ int main(int argc, char* argv[]) {
             printf("Three most common misspellings: %s (%d times), %s (%d times), %s (%d times)\n", global_mistakes.words[0], global_mistakes.word_counts[0], global_mistakes.words[1], global_mistakes.word_counts[1], global_mistakes.words[2], global_mistakes.word_counts[2]);
         }
     }
+    
+    // Clean up remaining resources
     deinitSpellingMistakes(&global_mistakes);
     free(threads);
 

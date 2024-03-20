@@ -6,5 +6,5 @@
 
 ## Compilation
 
-- `make` -> Runs `cc a1.c -Wall -g -std=c11 -lm -o A1`
-- `make clean` -> Removes `A2` executable and `*.hist` files
+- `make` -> Runs `cc a2.c -Wall -g -std=c11 -lpthread -o A2checker`
+- `make clean` -> Removes `A2checker` executable and `dhart04_A2.out` files
