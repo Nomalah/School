@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1578012848 source:d:\coding\assignment 4\assign4_9\main.cpp
+	<iostream>
+	<math.h>
+	<string>
+
